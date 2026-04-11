@@ -1,0 +1,46 @@
+name: Lotto Data Update
+
+on:
+  schedule:
+    - cron: '0 8 * * 3,6'   # Wednesday and Saturday at 8:00 UTC (Eurojackpot: Tue/Fri draws)
+    - cron: '0 8 * * 4,0'   # Thursday and Sunday at 8:00 UTC (Lotto 6aus49: Wed/Sat draws)
+  workflow_dispatch:        # Allow manual triggering
+
+jobs:
+  update-lotto-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          
+      - name: Update Eurojackpot data (Tue/Fri draws -> Wed/Sat update)
+        if: github.event.schedule == '0 8 * * 3,6'
+        run: |
+          python src/scraper.py eurojackpot
+          python src/analyzer.py eurojackpot
+          
+      - name: Update Lotto 6aus49 data (Wed/Sat draws -> Thu/Sun update)
+        if: github.event.schedule == '0 8 * * 4,0'
+        run: |
+          python src/scraper.py lotto
+          python src/analyzer.py lotto
+          
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          if git diff --quiet; then
+            echo "No changes to commit"
+          else
+            git add data/*.csv
+            git commit -m "Update lottery data: $(date)"
+            git push
+          fi

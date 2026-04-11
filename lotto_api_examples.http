@@ -1,0 +1,30 @@
+@baseUrl = https://www.lotto-brandenburg.de
+@locale = de
+
+### Draw years - Eurojackpot
+GET {{baseUrl}}/app/getDrawResultYears?gameType=EURO
+Accept: application/json
+
+### Draw years - LOTTO 6aus49
+GET {{baseUrl}}/app/getDrawResultYears?gameType=LOTTO
+Accept: application/json
+
+### Draw dates by year - Eurojackpot
+@yearEuro = 2026
+GET {{baseUrl}}/app/getDrawResultDates?locale={{locale}}&gameType=EURO&year={{yearEuro}}
+Accept: application/json
+
+### Draw dates by year - LOTTO 6aus49
+@yearLotto = 2026
+GET {{baseUrl}}/app/getDrawResultDates?locale={{locale}}&gameType=LOTTO&year={{yearLotto}}
+Accept: application/json
+
+### Draw result by date - Eurojackpot
+@dateEuro = 2026-03-06
+GET {{baseUrl}}/app/getDrawResults?locale={{locale}}&gameType=EURO&date={{dateEuro}}
+Accept: application/json
+
+### Draw result by date - LOTTO 6aus49
+@dateLotto = 2026-03-04
+GET {{baseUrl}}/app/getDrawResults?locale={{locale}}&gameType=LOTTO&date={{dateLotto}}
+Accept: application/json
