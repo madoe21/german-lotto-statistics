@@ -59,6 +59,15 @@
             <div class="chart-container">
                 <canvas id="lottoSuperzahlChart"></canvas>
             </div>
+            <div class="chart-container">
+                <canvas id="lottoPairsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="lottoTriplesChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="lottoQuadruplesChart"></canvas>
+            </div>
         </div>
         
         <div class="game-section" id="eurojackpot-section">
@@ -68,6 +77,15 @@
             </div>
             <div class="chart-container">
                 <canvas id="eurojackpotEurozahlenChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="eurojackpotPairsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="eurojackpotTriplesChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="eurojackpotQuadruplesChart"></canvas>
             </div>
         </div>
         
@@ -163,53 +181,115 @@
                 // Load Lotto 6aus49 data
                 const lottoNumbersData = await fetchCSV(baseUrl + repo + 'data/lotto_most_frequent_numbers.csv');
                 const lottoSuperzahlData = await fetchCSV(baseUrl + repo + 'data/lotto_most_frequent_special_numbers.csv');
+                const lottoPairsData = await fetchCSV(baseUrl + repo + 'data/lotto_most_frequent_pairs.csv');
+                const lottoTriplesData = await fetchCSV(baseUrl + repo + 'data/lotto_most_frequent_triples.csv');
+                const lottoQuadruplesData = await fetchCSV(baseUrl + repo + 'data/lotto_most_frequent_quadruples.csv');
                 
                 // Load Eurojackpot data
                 const euroNumbersData = await fetchCSV(baseUrl + repo + 'data/eurojackpot_most_frequent_numbers.csv');
                 const euroEurozahlenData = await fetchCSV(baseUrl + repo + 'data/eurojackpot_most_frequent_special_numbers.csv');
+                const euroPairsData = await fetchCSV(baseUrl + repo + 'data/eurojackpot_most_frequent_pairs.csv');
+                const euroTriplesData = await fetchCSV(baseUrl + repo + 'data/eurojackpot_most_frequent_triples.csv');
+                const euroQuadruplesData = await fetchCSV(baseUrl + repo + 'data/eurojackpot_most_frequent_quadruples.csv');
                 
                 // Create charts if data is available
                 if (lottoNumbersData.length > 0) {
-                    const top10 = lottoNumbersData.slice(0, 10);
                     createBarChart(
                         'lottoNumbersChart',
-                        top10.map(row => row.Number),
-                        top10.map(row => parseInt(row.Frequency)),
-                        'Häufigste Lottozahlen (Top 10)',
+                        lottoNumbersData.map(row => row.Number),
+                        lottoNumbersData.map(row => parseInt(row.Frequency)),
+                        'Häufigste Lottozahlen (Alle)',
                         'rgba(52, 152, 219, 0.6)'
                     );
                 }
                 
                 if (lottoSuperzahlData.length > 0) {
-                    const top5 = lottoSuperzahlData.slice(0, 5);
                     createBarChart(
                         'lottoSuperzahlChart',
-                        top5.map(row => row.SpecialNumber),
-                        top5.map(row => parseInt(row.Frequency)),
-                        'Häufigste Superzahl (Top 5)',
+                        lottoSuperzahlData.map(row => row.SpecialNumber),
+                        lottoSuperzahlData.map(row => parseInt(row.Frequency)),
+                        'Häufigste Superzahl (Alle)',
                         'rgba(46, 204, 113, 0.6)'
                     );
                 }
                 
+                if (lottoPairsData.length > 0) {
+                    createBarChart(
+                        'lottoPairsChart',
+                        lottoPairsData.map(row => row.Combination),
+                        lottoPairsData.map(row => parseInt(row.Frequency)),
+                        'Häufigste Lottozahl-Paare (Alle)',
+                        'rgba(52, 152, 219, 0.6)'
+                    );
+                }
+                
+                if (lottoTriplesData.length > 0) {
+                    createBarChart(
+                        'lottoTriplesChart',
+                        lottoTriplesData.map(row => row.Combination),
+                        lottoTriplesData.map(row => parseInt(row.Frequency)),
+                        'Häufigste Lottozahl-Drillinge (Alle)',
+                        'rgba(52, 152, 219, 0.6)'
+                    );
+                }
+                
+                if (lottoQuadruplesData.length > 0) {
+                    createBarChart(
+                        'lottoQuadruplesChart',
+                        lottoQuadruplesData.map(row => row.Combination),
+                        lottoQuadruplesData.map(row => parseInt(row.Frequency)),
+                        'Häufigste Lottozahl-Vierlinge (Alle)',
+                        'rgba(52, 152, 219, 0.6)'
+                    );
+                }
+                
                 if (euroNumbersData.length > 0) {
-                    const top10 = euroNumbersData.slice(0, 10);
                     createBarChart(
                         'eurojackpotNumbersChart',
-                        top10.map(row => row.Number),
-                        top10.map(row => parseInt(row.Frequency)),
-                        'Häufigste Eurojackpot-Zahlen (Top 10)',
+                        euroNumbersData.map(row => row.Number),
+                        euroNumbersData.map(row => parseInt(row.Frequency)),
+                        'Häufigste Eurojackpot-Zahlen (Alle)',
                         'rgba(155, 89, 182, 0.6)'
                     );
                 }
                 
                 if (euroEurozahlenData.length > 0) {
-                    const top5 = euroEurozahlenData.slice(0, 5);
                     createBarChart(
                         'eurojackpotEurozahlenChart',
-                        top5.map(row => row.SpecialNumber),
-                        top5.map(row => parseInt(row.Frequency)),
-                        'Häufigste Eurozahlen (Top 5)',
+                        euroEurozahlenData.map(row => row.SpecialNumber),
+                        euroEurozahlenData.map(row => parseInt(row.Frequency)),
+                        'Häufigste Eurozahlen (Alle)',
                         'rgba(231, 76, 60, 0.6)'
+                    );
+                }
+                
+                if (euroPairsData.length > 0) {
+                    createBarChart(
+                        'eurojackpotPairsChart',
+                        euroPairsData.map(row => row.Combination),
+                        euroPairsData.map(row => parseInt(row.Frequency)),
+                        'Häufigste Eurojackpot-Zahl-Paare (Alle)',
+                        'rgba(155, 89, 182, 0.6)'
+                    );
+                }
+                
+                if (euroTriplesData.length > 0) {
+                    createBarChart(
+                        'eurojackpotTriplesChart',
+                        euroTriplesData.map(row => row.Combination),
+                        euroTriplesData.map(row => parseInt(row.Frequency)),
+                        'Häufigste Eurojackpot-Zahl-Drillinge (Alle)',
+                        'rgba(155, 89, 182, 0.6)'
+                    );
+                }
+                
+                if (euroQuadruplesData.length > 0) {
+                    createBarChart(
+                        'eurojackpotQuadruplesChart',
+                        euroQuadruplesData.map(row => row.Combination),
+                        euroQuadruplesData.map(row => parseInt(row.Frequency)),
+                        'Häufigste Eurojackpot-Zahl-Vierlinge (Alle)',
+                        'rgba(155, 89, 182, 0.6)'
                     );
                 }
                 
