@@ -34,6 +34,7 @@ def main() -> int:
     print(f"Added: {stats.added}")
     print(f"Skipped existing: {stats.skipped_existing}")
     print(f"Skipped by date filter: {stats.skipped_date_filter}")
+    print(f"Skipped (no result for game): {stats.skipped_no_result}")
     print(f"Errors: {stats.errors}")
     print("=" * 60)
     return 0 if stats.errors == 0 else 1
