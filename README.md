@@ -1,106 +1,89 @@
-# Lotto Tool Suite (Eurojackpot + 6aus49)
+# German Lotto Statistics
 
-This project supports two games:
+Statistical analysis for **LOTTO 6aus49** and **Eurojackpot** - automatically updated after every draw.
 
-- `eurojackpot`
-- `lotto` (LOTTO 6aus49)
+**[View Live Statistics](https://madoe21.github.io/german-lotto-statistics/)**
 
-The tooling is API-based and no longer uses Selenium/browser scraping.
+## Features
 
-## Architecture
+- Automatic retrieval of new draw results via Lotto Brandenburg API
+- Statistical analysis: most frequent numbers, pairs, triples, quadruples
+- Interactive chart visualization on GitHub Pages
+- GitHub Actions updates data automatically after every draw
 
-```text
+## Update Schedule
+
+| Game | Draw | Data Update |
+|------|------|-------------|
+| Eurojackpot | Tue + Fri | Wed + Sat 08:00 UTC |
+| LOTTO 6aus49 | Wed + Sat | Thu + Sun 08:00 UTC |
+
+## Usage
+
+### Scraper
+
+Fetch new draw results:
+
+```bash
+python src/scraper.py lotto
+python src/scraper.py eurojackpot
+python src/scraper.py lotto --from-date 01.01.2024
+```
+
+### Analyzer
+
+Generate statistics from draw data:
+
+```bash
+python src/analyzer.py lotto
+python src/analyzer.py eurojackpot
+```
+
+### Options
+
+| Option | Description |
+|--------|-------------|
+| `--from-date DD.MM.YYYY` | Only include draws from this date |
+| `--data-dir data` | Directory for CSV files |
+| `--draws-file <path>` | Custom path for draws CSV |
+
+## Project Structure
+
+```
 src/
-  scraper.py
-  analyzer.py
-    scraper.py
-  analyzer.py
+  scraper.py              # CLI: fetch draw data
+  analyzer.py             # CLI: generate statistics
   lotto/
-    api_client.py
-    config.py
-    csv_io.py
-    scraper_service.py
-    analyzer_service.py
+    api_client.py          # Lotto Brandenburg API client
+    config.py              # Game configuration (6aus49, Eurojackpot)
+    csv_io.py              # CSV read/write operations
+    scraper_service.py     # Scraper logic
+    analyzer_service.py    # Analyzer logic
 data/
-  <draw files and generated statistics>
-lotto_api_examples.http
+  *_draws.csv              # Raw draw data
+  *_most_frequent_*.csv    # Statistical results
+  *_statistics_summary.csv # Summaries
+docs/
+  index.html               # GitHub Pages visualization
 ```
 
 ## API Source
 
-The implementation uses these Lotto Brandenburg endpoints:
+Lotto Brandenburg endpoints:
 
-- `/app/getDrawResultYears`
-- `/app/getDrawResultDates`
-- `/app/getDrawResults`
+- `/app/getDrawResultYears` - Available years
+- `/app/getDrawResultDates` - Draw dates for a year
+- `/app/getDrawResults` - Result of a single draw
 
-Game mapping:
+Example requests: [lotto_api_examples.http](lotto_api_examples.http)
 
-- Eurojackpot -> `gameType=EURO`
-- LOTTO 6aus49 -> `gameType=LOTTO`
-
-Request examples are in `lotto_api_examples.http`.
-
-## Usage
-
-All commands take a `game` argument:
-
-- `eurojackpot`
-- `lotto` (alias: `6aus49`)
-
-### 1) Scraper
-
-```bash
-python src/scraper.py eurojackpot
-python src/scraper.py lotto
-python src/scraper.py lotto --from-date 01.01.2024
-```
-
-Options:
-
-- `--from-date DD.MM.YYYY`
-- `--data-dir data`
-- `--draws-file <custom path>`
-
-Default draw files:
-
-- `data/eurojackpot_draws.csv`
-- `data/lotto_draws.csv`
-
-### 2) Analyzer
-
-```bash
-python src/analyzer.py eurojackpot
-python src/analyzer.py lotto
-```
-
-Outputs are written to `data/`, for example:
-
-- `data/eurojackpot_most_frequent_numbers.csv`
-- `data/eurojackpot_most_frequent_special_numbers.csv`
-- `data/eurojackpot_most_frequent_pairs.csv`
-- `data/eurojackpot_most_frequent_triples.csv`
-- `data/eurojackpot_most_frequent_quadruples.csv`
-- `data/eurojackpot_most_frequent_special_pairs.csv` (Eurojackpot only)
-- `data/eurojackpot_statistics_summary.csv`
-
-Equivalent files are generated for `lotto_*`.
-
-
-
-## Notes
-
-- Legacy root scripts were removed.
-- Use only the `src/*.py` entrypoints shown above.
-- No browser dependencies are required.
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Contributing
 
-Found a bug or have a suggestion for improvement? Please create an issue or pull request.
-
-I appreciate everyone who supports me and the project! For any requests and suggestions, feel free to provide feedback.
+Found a bug or have a suggestion? Feel free to create an issue or pull request.
 
 <p>
   <a href="https://www.buymeacoffee.com/madoe21">
