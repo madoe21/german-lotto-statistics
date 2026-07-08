@@ -98,3 +98,9 @@ Found a bug or have a suggestion? Feel free to create an issue or pull request.
     <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" height="50" alt="PayPal">
   </a>
 </p>
+
+---
+
+## Built with aiflow
+
+This project was built with support from **[aiflow](https://cyber93de.github.io/aiflow/)** — *built with aiflow*.
