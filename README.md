@@ -1,5 +1,7 @@
 # German Lotto Statistics
 
+[![Built with aiflow](https://img.shields.io/badge/built%20with-aiflow-6b46c1)](https://github.com/cyber93de/aiflow)
+
 Statistical analysis for **LOTTO 6aus49** and **Eurojackpot** - automatically updated after every draw.
 
 **[View Live Statistics](https://madoe21.github.io/german-lotto-statistics/)**
