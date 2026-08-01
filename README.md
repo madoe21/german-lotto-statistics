@@ -1,5 +1,7 @@
 # German Lotto Statistics
 
+[![Built with aiflow](https://img.shields.io/badge/built%20with-aiflow-6b46c1)](https://github.com/cyber93de/aiflow)
+
 Statistical analysis for **LOTTO 6aus49** and **Eurojackpot** - automatically updated after every draw.
 
 **[View Live Statistics](https://madoe21.github.io/german-lotto-statistics/)**
@@ -98,3 +100,9 @@ Found a bug or have a suggestion? Feel free to create an issue or pull request.
     <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" height="50" alt="PayPal">
   </a>
 </p>
+
+---
+
+## Built with aiflow
+
+This project was built with support from **[aiflow](https://cyber93de.github.io/aiflow/)** — *built with aiflow*.
